@@ -1,17 +1,16 @@
 export enum SelectedPage {
   Home = "home",
-  Benefits = "benefits",
-  OurClasses = "ourclasses",
+  AboutUs = "aboutus",
+  Projects = "projects",
   ContactUs = "contactus"
 }
 
-export interface BenefitType {
-  icon: JSX.Element;
+export interface CardType {
   title: string;
   description: string;
 }
 
-export interface ClassType {
+export interface ProjectType {
   name: string;
   description?: string;
   image: string

@@ -2,14 +2,13 @@ import { useForm } from "react-hook-form";
 import HText from "@/shared/HText";
 import { SelectedPage } from "@/shared/types";
 import { motion } from "framer-motion";
-import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 
 type Props = {
 	setSelectedPage: (value: SelectedPage) => void;
 }
 
 const ContactUs = ({setSelectedPage}: Props) => {
-	const inputStyles = `mb-5 w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white`;
+	const inputStyles = `mb-5 w-full rounded-lg bg-orange-10 px-5 py-3 placeholder-white`;
 	
 	const {
 		register,
@@ -44,15 +43,13 @@ const ContactUs = ({setSelectedPage}: Props) => {
 						visible: {opacity: 1, x: 0}
 					}}
 				>
-					<HText>
-						<span className="text-primary-500">JOIN NOW</span> TO GET IN SHAPE
-					</HText>
-					<p className="my-5">
-						Congue adipiscing risus commodo placerat. Tellus et in feugiat nisl sapien vel rhoncus. Placerat at in enim pellentesque. Nulla adipiscing leo egestas nisi elit risus sit. Nunc cursus sagittis.
+					<HText>Contact us to learn more</HText>
+					<p className="mt-5">
+						Leave your message and we'll get back to you shortly.
 					</p>
 				</motion.div>
 
-				{/*  form & image */}
+				{/*  form */}
 				<div className="mt-10 justify-between gap-8 md:flex">
 					<motion.div
 						className="mt-10 basis-3/5 md:mt-0"
@@ -71,6 +68,12 @@ const ContactUs = ({setSelectedPage}: Props) => {
 							action="https://formsubmit.co/your@email.com"
 							method="POST"
 						>
+							{errors.name && (
+								<p className="mb-1 text-primary-500">
+									{errors.name.type === "required" && "This field is required"}
+									{errors.name.type === "maxLength" && "Max length is 100 char"}
+								</p>
+							)}
 							<input 
 								className={inputStyles}
 								type="text"
@@ -80,13 +83,13 @@ const ContactUs = ({setSelectedPage}: Props) => {
 									maxLength: 100,
 								})}
 							/>
-							{errors.name && (
-								<p className="mt-1 text-primary-500">
-									{errors.name.type === "required" && "This field is required"}
-									{errors.name.type === "maxLength" && "Max length is 100 char"}
+							
+							{errors.email && (
+								<p className="mb-1 text-primary-500">
+									{errors.email.type === "required" && "This field is required"}
+									{errors.email.type === "pattern" && "invalid email address"}
 								</p>
 							)}
-
 							<input 
 								className={inputStyles}
 								type="text"
@@ -96,13 +99,41 @@ const ContactUs = ({setSelectedPage}: Props) => {
 									pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
 								})}
 							/>
+							
 							{errors.email && (
-								<p className="mt-1 text-primary-500">
+								<p className="mb-1 text-primary-500">
 									{errors.email.type === "required" && "This field is required"}
-									{errors.email.type === "pattern" && "invalid email address"}
 								</p>
 							)}
+							<input 
+								className={inputStyles}
+								type="text"
+								placeholder="PHONE"
+								{...register("phone", {
+									required: true,
+								})}
+							/>
 
+							{errors.email && (
+								<p className="mb-1 text-primary-500">
+									{errors.email.type === "required" && "This field is required"}
+								</p>
+							)}
+							<input 
+								className={inputStyles}
+								type="text"
+								placeholder="ADDRESS"
+								{...register("address", {
+									required: true,
+								})}
+							/>
+							
+							{errors.message && (
+								<p className="mb-1 text-primary-500">
+									{errors.message.type === "required" && "This field is required"}
+									{errors.message.type === "maxLength" && "Max length is 2000 char"}
+								</p>
+							)}
 							<textarea 
 								className={inputStyles}
 								rows={4}
@@ -113,40 +144,14 @@ const ContactUs = ({setSelectedPage}: Props) => {
 									maxLength: 2000,
 								})}
 							/>
-							{errors.message && (
-								<p className="mt-1 text-primary-500">
-									{errors.message.type === "required" && "This field is required"}
-									{errors.message.type === "maxLength" && "Max length is 2000 char"}
-								</p>
-							)}
-
+							
 							<button
 								type="submit"
-								className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+								className="rounded-lg bg-red-10 px-20 py-3 transition duration-500 text-white"
 							>
 								SUBMIT
 							</button>
 						</form>
-					</motion.div>
-
-					<motion.div
-						className="relative mt-16 basis-2/5 md:mt-0"
-						initial="hidden"
-						whileInView="visible"
-						viewport={{once: true, amount: 0.5}}
-						transition={{delay: 0.2, duration: 0.75}}
-						variants={{
-							hidden: {opacity: 0, y: 50},
-							visible: {opacity: 1, y: 0}
-						}}
-					>
-						<div className="md:before:content-evolvetext w-full before:absolute before:-bottom-20 before:-right-10 before:z-[-1]">
-							<img 
-								className="w-full"
-								src={ContactUsPageGraphic} 
-								alt="contact-us-page-graphic" 
-							/>
-						</div>
 					</motion.div>
 				</div>
 			</motion.div>

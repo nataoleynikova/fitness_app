@@ -1,34 +1,59 @@
-import { SelectedPage } from "@/shared/types";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import ActionButton from "@/shared/ActionButton";
-import HomePageText from "@/assets/HomePageText.png";
-import HomePageGraphic from "@/assets/HomePageGraphic.png";
-import SponsorRedbull from "@/assets/SponsorRedBull.png";
-import SponsorForbes from "@/assets/SponsorForbes.png";
-import SponsorFortune from "@/assets/SponsorFortune.png";
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
+import HText from "@/shared/HText";
+import { CardType, SelectedPage } from "@/shared/types";
+import Card from "./Card";
 
 type Props = {
 	setSelectedPage: (value: SelectedPage) => void;
 }
 
-const Home = ({setSelectedPage}: Props) => {
-	const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
+const cards: Array<CardType> = [
+	{
+		title: "Commercial",
+    description: "Expert commercial electrical services tailored to your needs. From installations to repairs and upgrades, our skilled team delivers top-quality workmanship.",
+	},
+	{
+		title: "Residential",
+    description: "Looking for Premium residential electrical services for your home. From installations to repairs, our skilled team provides safe and reliable solutions.",
+	},
+	{
+		title: "Industrial",
+    description: "Our experienced team handles installations, maintenance, and repairs with precision and efficiency. Trust us for safe, reliable, and high-quality electrical services.",
+	},
+	{
+		title: "Service Calls",
+    description: "Round-the-clock emergency electrical services at your fingertips. Our team is available 24/7 for all your urgent electrical needs. From power outages to electrical failures, we respond promptly and deliver efficient solutions.",
+	},
+	{
+		title: "Fire Alarm & ARCS",
+    description: "Comprehensive fire alarm and ARCS installation services you can rely on. Our expert team specializes in designing and installing cutting-edge fire alarm systems and ARCS systems. Ensure the safety of your property with our reliable solutions.",
+	},
+	{
+		title: "Low Voltage",
+    description: "Our skilled team specializes in low voltage installations, including data and communication wiring, security systems, and energy-efficient lighting. Count on us for efficient, reliable, and customized low voltage services.",
+	},
+];
 
+const container = {
+	hidden: {},
+	visible: {
+		transition: {staggerChildren: 0.8}
+	},
+};
+
+const Home = ({setSelectedPage}: Props) => {
 	return (
 		<section
 			id="home"
-			className="gap-16 bg-gray-20 py-10 md:h-full md:pb-6"
+			className="gap-16 bg-white mt-80 md:h-full md:pb-6"
 		>
-			{/* image & main header */}
+			{/* main header */}
 			<motion.div 
 				className="md:flex mx-auto w-5/6 items-center justify-center md:h-5/6"
 				onViewportEnter={() => setSelectedPage(SelectedPage.Home)}
 			>
-				{/* main header */}
-				<div className="z-10 mt-32 md:basis-3/5">
-					{/* headings */}
+				<div className="z-10 mt-32 md:basis-5/6">
+					{/* heading */}
 					<motion.div 
 						className="md:-mt-20"
 						initial="hidden"
@@ -40,61 +65,29 @@ const Home = ({setSelectedPage}: Props) => {
 							visible: {opacity: 1, x: 0}
 						}}
 					>
-						<div className="relative">
-							<div className="before:absolute before:-top-20 before:-left-20 before:z-[-1] md:before:content-evolvetext">
-								<img src={HomePageText} alt="home-page-text" />
-							</div>
-						</div>
-						<p className="mt-8 text-sm">
-							Unrivaled Gym. Unparalleled Training Fitness Classes. World Class
-              Studios to get the Body Shapes That you Dream of.. Get Your Dream
-              Body Now.
-						</p>
+						<HText>
+							Comprehensive Electrical Contracting Services for Your Every Need
+						</HText>
 					</motion.div>
 
-					{/* actions */}
+					{/* cards */}
 					<motion.div 
-						className="mt-8 flex items-center gap-8 md:justify-start"
+						className="grid grid-rows-2 grid-flow-col items-center justify-between gap-8 mt-5"
 						initial="hidden"
 						whileInView="visible"
 						viewport={{once: true, amount: 0.5}}
-						transition={{delay: 0.2, duration: 0.75}}
-						variants={{
-							hidden: {opacity: 0, x: -50},
-							visible: {opacity: 1, x: 0}
-						}}
+						variants={container}
 					>
-						<ActionButton setSelectedPage={setSelectedPage}>
-							Join Now
-						</ActionButton>
-						<AnchorLink 
-							className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
-							onClick={() => setSelectedPage(SelectedPage.ContactUs)}
-							href={`#${SelectedPage.ContactUs}`}
-						>
-							<p>Learn More</p>
-						</AnchorLink>
+						{cards.map((card: CardType) => (
+							<Card 
+								key={card.title}
+								title={card.title}
+								description={card.description}
+							/>
+						))}
 					</motion.div>
 				</div>
-
-				{/* image */}
-				<div className="flex basis-3/5 justify-center md:z-10 md:ml-40 md:mt-16 md:justify-items-end">
-					<img src={HomePageGraphic} alt="home-page-graphic" />
-				</div>
 			</motion.div>
-
-			{/* sponsors */}
-			{isAboveMediumScreens && (
-				<div className="h-[150px] w-full bg-primary-100 py-10">
-					<div className="mx-auto w-5/6">
-						<div className="flex w-3/5 items-center justify-between gap-8">
-							<img src={SponsorRedbull} alt="redbull-sponsor" />
-							<img src={SponsorForbes} alt="forbes-sponsor" />
-							<img src={SponsorFortune} alt="fortune-sponsor" />
-						</div>
-					</div>
-				</div>
-			)}
 		</section>
 	)
 }

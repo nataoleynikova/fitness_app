@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import Logo from "@/assets/Logo.png";
+import Logo from "@/assets/ShelbyLogo.png";
 import Link from "./Link";
 import { SelectedPage } from "@/shared/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import ActionButton from "@/shared/ActionButton";
 
 type Props = {
 	selectedPage: SelectedPage,
@@ -16,11 +15,11 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
 	const flexBetween = "flex items-center justify-between";
 	const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
 	const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
-	const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow";
+	const navbarBackground = isTopOfPage ? "" : "bg-white drop-shadow";
 
 	return <nav>
 		<div 
-			className={`${flexBetween} ${navbarBackground} fixed top-0 z-30 w-full py-6`}
+			className={`${flexBetween} ${navbarBackground} fixed top-0 z-30 w-full py-6 text-gray-10`}
 		>
 			<div className={`${flexBetween} mx-auto w-5/6`}>
 				<div className={`${flexBetween} w-full gap-16`}>
@@ -31,19 +30,19 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
 					{/* right side */}
 					{isAboveMediumScreens ? (
 						<div className={`${flexBetween} w-full`}>
-						<div className={`${flexBetween} gap-8 text-sm`}>
+						<div className={`${flexBetween} gap-8 text-md`}>
 							<Link 
 								page="Home" 
 								selectedPage={selectedPage} 
 								setSelectedPage={setSelectedPage}
 							/>
 							<Link 
-								page="Benefits" 
+								page="About Us" 
 								selectedPage={selectedPage} 
 								setSelectedPage={setSelectedPage}
 							/>
 							<Link 
-								page="Our Classes" 
+								page="Projects" 
 								selectedPage={selectedPage} 
 								setSelectedPage={setSelectedPage}
 							/>
@@ -52,12 +51,6 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
 								selectedPage={selectedPage} 
 								setSelectedPage={setSelectedPage}
 							/>
-						</div>
-						<div className={`${flexBetween} gap-8`}>
-							<p>Sign In</p>
-							<ActionButton setSelectedPage={setSelectedPage}>
-								Become a Member
-							</ActionButton>
 						</div>
 					</div>
 					) : (
